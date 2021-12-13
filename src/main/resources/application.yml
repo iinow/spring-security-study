@@ -6,3 +6,26 @@ spring:
       name: user
       password: 1234
       roles: user
+  datasource:
+    url: jdbc:postgresql://192.168.0.24:5433/postgres
+    username: postgres
+    password: qlalfqjsghekd
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  thymeleaf:
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  main:
+    allow-bean-definition-overriding: true
