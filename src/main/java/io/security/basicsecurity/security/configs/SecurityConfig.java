@@ -1,5 +1,9 @@
 package io.security.basicsecurity.security.configs;
 
+import io.security.basicsecurity.security.common.FormAuthenticationDetailsSource;
+import io.security.basicsecurity.security.handler.CustomAccessDeniedHandler;
+import io.security.basicsecurity.security.handler.CustomAuthenticationFailureHandler;
+import io.security.basicsecurity.security.handler.CustomAuthenticationSuccessHandler;
 import io.security.basicsecurity.security.provider.CustomAuthenticationProvider;
 import io.security.basicsecurity.security.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final CustomUserDetailsService customUserDetailsService;
 
+  private final FormAuthenticationDetailsSource formAuthenticationDetailsSource;
+
+  private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+  private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
@@ -30,12 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.userDetailsService(customUserDetailsService);
+//    auth.userDetailsService(customUserDetailsService); provider
     auth.authenticationProvider(customAuthenticationProvider());
-//    String password = passwordEncoder().encode("1111");
-//    auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
-//    auth.inMemoryAuthentication().withUser("manager").password(password).roles("USER","MANAGER");
-//    auth.inMemoryAuthentication().withUser("admin").password(password).roles("USER","MANAGER","ADMIN");
   }
 
   @Bean
@@ -47,8 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/**/*.js", "/**/*.css", "/**/*.jpg").permitAll()
-        .antMatchers("/", "/users").permitAll()
+        .antMatchers("/", "/users", "/login*", "user/login/**").permitAll()
         .antMatchers("/mypage").hasRole("USER")
         .antMatchers("/messages").hasRole("MANAGER")
         .antMatchers("/config").hasRole("ADMIN")
@@ -58,8 +63,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginPage("/login")
         .loginProcessingUrl("/login_proc")
         .defaultSuccessUrl("/")
+        .authenticationDetailsSource(formAuthenticationDetailsSource)
+        .successHandler(customAuthenticationSuccessHandler)
+        .failureHandler(customAuthenticationFailureHandler)
         .permitAll()
+        .and()
+        .exceptionHandling()
+        .accessDeniedHandler(customAccessDeniedHandler())
+        .and()
         ;
+  }
+
+  @Bean
+  public CustomAccessDeniedHandler customAccessDeniedHandler() {
+    return new CustomAccessDeniedHandler("/denied");
   }
 
   @Bean
