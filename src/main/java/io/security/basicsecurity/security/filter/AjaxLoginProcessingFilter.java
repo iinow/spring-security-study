@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -15,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
+  @Setter
   private ObjectMapper objectMapper = new ObjectMapper();
 
   public AjaxLoginProcessingFilter() {
@@ -38,7 +40,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
   }
 
   private boolean isAjax(HttpServletRequest request) {
-    if("XMLHttpRequest".equals(request.getHeader("X-Requested-with"))) {
+    if ("XMLHttpRequest".equals(request.getHeader("X-Requested-with"))) {
       return true;
     }
     return false;
