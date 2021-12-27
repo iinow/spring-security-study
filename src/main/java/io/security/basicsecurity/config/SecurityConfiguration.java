@@ -10,6 +10,7 @@ import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 
@@ -78,6 +79,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .sessionFixation().changeSessionId()
 //                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .and()
+            .sessionManagement()
+            .maximumSessions(1).maxSessionsPreventsLogin(true)
+            .and()
+            .sessionFixation().changeSessionId()
+            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
 
                 .exceptionHandling()
