@@ -1,7 +1,7 @@
 package io.security.basicsecurity.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.security.basicsecurity.domain.Account;
+import io.security.basicsecurity.domain.entity.Account;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

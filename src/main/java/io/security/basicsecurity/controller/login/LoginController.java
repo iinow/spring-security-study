@@ -1,6 +1,6 @@
 package io.security.basicsecurity.controller.login;
 
-import io.security.basicsecurity.domain.Account;
+import io.security.basicsecurity.domain.entity.Account;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
