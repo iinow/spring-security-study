@@ -27,6 +27,8 @@ dependencies {
 
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
 
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.4.2'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'

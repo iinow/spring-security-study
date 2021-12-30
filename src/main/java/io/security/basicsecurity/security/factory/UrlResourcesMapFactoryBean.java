@@ -5,12 +5,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public class UrlResourcesMapFactoryBean implements FactoryBean<Map<RequestMatcher, List<ConfigAttribute>>> {
 
+  @Autowired
   private SecurityResourceService securityResourceService;
+
   private Map<RequestMatcher, List<ConfigAttribute>> resourceMap;
 
   @Override

@@ -1,7 +1,7 @@
 package io.security.basicsecurity.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.security.basicsecurity.domain.AccountDto;
+import io.security.basicsecurity.domain.dto.AccountDto;
 import io.security.basicsecurity.security.token.AjaxAuthenticationToken;
 import java.io.IOException;
 import javax.servlet.ServletException;

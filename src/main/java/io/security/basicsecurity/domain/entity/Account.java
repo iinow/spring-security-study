@@ -1,6 +1,6 @@
 package io.security.basicsecurity.domain.entity;
 
-import io.security.basicsecurity.domain.AccountDto;
+import io.security.basicsecurity.domain.dto.AccountDto;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -12,9 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@Builder
+@Setter
 @NoArgsConstructor
 @Getter
 @Entity
@@ -36,7 +42,7 @@ public class Account {
   @Column
   private String password;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+  @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
   @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = {
       @JoinColumn(name = "role_id") })
   private Set<Role> userRoles = new HashSet<>();

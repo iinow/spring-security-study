@@ -1,8 +1,8 @@
 package io.security.basicsecurity.controller.user;
 
+import io.security.basicsecurity.domain.dto.AccountDto;
 import io.security.basicsecurity.domain.entity.Account;
-import io.security.basicsecurity.domain.AccountDto;
-import io.security.basicsecurity.service.UserService;
+import io.security.basicsecurity.service.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,9 @@ public class UserController {
 
   @GetMapping(value="/mypage")
   public String myPage() {
+
+    userService.order();
+
     return "user/mypage";
   }
 
