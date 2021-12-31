@@ -5,3 +5,5 @@
       1. AffirmativeBased ...
 
 * AbstractAuthenticationProcessingFilter
+* MethodSecurityInterceptor
+* FilterSecurityInterceptor
