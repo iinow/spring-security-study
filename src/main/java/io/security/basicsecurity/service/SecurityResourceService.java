@@ -1,6 +1,7 @@
 package io.security.basicsecurity.service;
 
 import io.security.basicsecurity.domain.entity.AccessIp;
+import io.security.basicsecurity.domain.entity.Resources;
 import io.security.basicsecurity.repository.AccessIpRepository;
 import io.security.basicsecurity.repository.ResourcesRepository;
 import java.util.LinkedHashMap;
@@ -28,6 +29,32 @@ public class SecurityResourceService {
         .collect(
             Collectors.toMap(
                 v -> new AntPathRequestMatcher(v.getResourceName()),
+                v ->
+                    v.getRoleSet().stream()
+                        .map(role -> new SecurityConfig(role.getRoleName()))
+                        .collect(Collectors.toList()),
+                (x, y) -> y,
+                LinkedHashMap::new));
+  }
+
+  public Map<String, List<ConfigAttribute>> getMethodResourceList() {
+    return resourcesRepository.findAllMethodResources().stream()
+        .collect(
+            Collectors.toMap(
+                Resources::getResourceName,
+                v ->
+                    v.getRoleSet().stream()
+                        .map(role -> new SecurityConfig(role.getRoleName()))
+                        .collect(Collectors.toList()),
+                (x, y) -> y,
+                LinkedHashMap::new));
+  }
+
+  public Map<String, List<ConfigAttribute>> getPointcutResourceList() {
+    return resourcesRepository.findAllPointcutResources().stream()
+        .collect(
+            Collectors.toMap(
+                Resources::getResourceName,
                 v ->
                     v.getRoleSet().stream()
                         .map(role -> new SecurityConfig(role.getRoleName()))
